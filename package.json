@@ -1,6 +1,6 @@
 {
   "name": "@gurke/sqs",
-  "version": "1.0.7",
+  "version": "1.0.11",
   "description": "Cucumber step definition library for sqs testing in jest runner",
   "main": "package/index.js",
   "scripts": {
@@ -20,10 +20,8 @@
     "@aws-sdk/client-sqs": "3.150.0",
     "@types/jest": "28.1.4",
     "@types/node": "^16.18.14",
-    "@types/supertest": "^2.0.12",
     "jest": "28.1.2",
     "jest-cucumber": "3.0.1",
-    "supertest": "^6.3.3",
     "timer": "^1.0.1",
     "ts-jest": "28.0.5",
     "typescript": "^4.9.5",
