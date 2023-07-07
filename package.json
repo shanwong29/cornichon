@@ -1,13 +1,13 @@
 {
   "name": "@gurke/sqs",
-  "version": "1.0.0",
+  "version": "1.0.7",
   "description": "Cucumber step definition library for sqs testing in jest runner",
-  "main": "src/index.js",
+  "main": "package/index.js",
   "scripts": {
     "build": "tsc"
   },
   "files": [
-    "dist"
+    "package"
   ],
   "author": "Shan Wong",
   "license": "MIT",
