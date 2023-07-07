@@ -1,5 +1,5 @@
 {
-  "name": "cornichon",
+  "name": "@gurke/sqs",
   "version": "1.0.0",
   "description": "Cucumber step definition library for sqs testing in jest runner",
   "main": "src/index.js",
@@ -44,6 +44,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/shanwong29/cornichon"
+    "url": "git://github.com/shanwong29/gurke"
   }
 }
