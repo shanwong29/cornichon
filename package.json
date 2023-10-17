@@ -1,6 +1,6 @@
 {
   "name": "@gurke/sqs",
-  "version": "1.0.11",
+  "version": "0.1.1",
   "description": "Cucumber step definition library for sqs testing in jest runner",
   "main": "package/index.js",
   "scripts": {

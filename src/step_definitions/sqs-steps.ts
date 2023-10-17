@@ -4,15 +4,6 @@ import { testDataStorage } from "../utils/test-data-storage";
 
 export const sqsSteps: StepDefinitions = ({ given, then }) => {
   given(
-    /environment variables are set as follows:/,
-    (envList: { EnvKey: string; EnvValue: string }[]) => {
-      envList.forEach(({ EnvKey, EnvValue }) => {
-        process.env[EnvKey] = EnvValue;
-      });
-    }
-  );
-
-  given(
     /a (fifo|standard) queue with queue name variable "(.*)" exists/,
     async (queueType: "fifo" | "standard", queueVariableName: string) => {
       const isFifo = queueType === "fifo";
