@@ -42,12 +42,14 @@ var promises_1 = require("timers/promises");
 var test_data_storage_1 = require("../test-data-storage");
 var getSqs = function () {
     var sqsConfig = {
-        region: process.env["AWS_REGION"],
+        region: process.env["AWS_REGION"] || "eu-central-1",
     };
-    sqsConfig.endpoint = process.env["LOCALSTACK_SQS_ENDPOINT"];
+    sqsConfig.endpoint =
+        process.env["TEST_SQS_ENDPOINT"] ||
+            "http://eu-central-1.queue.localhost.localstack.cloud:4566";
     sqsConfig.credentials = {
-        accessKeyId: process.env["TEST_AWS_ACCESS_KEY_ID"],
-        secretAccessKey: process.env["TEST_AWS_SECRET_ACCESS_KEY"],
+        accessKeyId: process.env["TEST_AWS_ACCESS_KEY_ID"] || "test",
+        secretAccessKey: process.env["TEST_AWS_SECRET_ACCESS_KEY"] || "test",
     };
     return new client_sqs_1.SQSClient(sqsConfig);
 };

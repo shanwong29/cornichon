@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sqsCleanUp = exports.sqsSteps = void 0;
+exports.waitForInFlightMessagesToBeVisible = exports.sqsCleanUp = exports.sqsSteps = void 0;
 var queue_1 = require("./src/utils/configuration/queue");
 var test_data_storage_1 = require("./src/utils/test-data-storage");
 var sqs_steps_1 = require("./src/step_definitions/sqs-steps");
@@ -53,4 +53,15 @@ var sqsCleanUp = function () { return __awaiter(void 0, void 0, void 0, function
     });
 }); };
 exports.sqsCleanUp = sqsCleanUp;
+var waitForInFlightMessagesToBeVisible = function () { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, queue_1.queue.waitForInFlightMessagesToBeVisible()];
+            case 1:
+                _a.sent();
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.waitForInFlightMessagesToBeVisible = waitForInFlightMessagesToBeVisible;
 //# sourceMappingURL=index.js.map

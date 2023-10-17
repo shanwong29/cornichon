@@ -41,12 +41,6 @@ var queue_1 = require("../utils/configuration/queue");
 var test_data_storage_1 = require("../utils/test-data-storage");
 var sqsSteps = function (_a) {
     var given = _a.given, then = _a.then;
-    given(/environment variables are set as follows:/, function (envList) {
-        envList.forEach(function (_a) {
-            var EnvKey = _a.EnvKey, EnvValue = _a.EnvValue;
-            process.env[EnvKey] = EnvValue;
-        });
-    });
     given(/a (fifo|standard) queue with queue name variable "(.*)" exists/, function (queueType, queueVariableName) { return __awaiter(void 0, void 0, void 0, function () {
         var isFifo;
         return __generator(this, function (_a) {

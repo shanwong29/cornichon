@@ -15,13 +15,16 @@ import { testDataStorage } from "../test-data-storage";
 
 const getSqs = () => {
   const sqsConfig: SQSClientConfig = {
-    region: process.env["AWS_REGION"],
+    region: process.env["AWS_REGION"] || "eu-central-1",
   };
 
-  sqsConfig.endpoint = process.env["LOCALSTACK_SQS_ENDPOINT"];
+  sqsConfig.endpoint =
+    process.env["TEST_SQS_ENDPOINT"] ||
+    "http://eu-central-1.queue.localhost.localstack.cloud:4566";
   sqsConfig.credentials = {
-    accessKeyId: process.env["TEST_AWS_ACCESS_KEY_ID"] as string,
-    secretAccessKey: process.env["TEST_AWS_SECRET_ACCESS_KEY"] as string,
+    accessKeyId: (process.env["TEST_AWS_ACCESS_KEY_ID"] as string) || "test",
+    secretAccessKey:
+      (process.env["TEST_AWS_SECRET_ACCESS_KEY"] as string) || "test",
   };
 
   return new SQSClient(sqsConfig);

@@ -5,15 +5,13 @@ A collection of cucumber step definitions to help testing sqs configuration.
 ## Prerequisite
 
 1. Using Jest as a test runner
-2. Using Localstack as a AWS SQS emulator
+2. Using [jest-cucumber library](https://www.npmjs.com/package/jest-cucumber) for cucumber setup
 
 ## Features
 
 Available step definitions:
 
 ```ts
-given(/environment variables are set as follows:/);
-
 given(/a (fifo|standard) queue with queue name variable "(.*)" exists/);
 
 given(
@@ -31,17 +29,24 @@ then(
 
 ```ts
 import { autoBindSteps, loadFeatures } from "jest-cucumber";
-import { sqsSteps, sqsCleanUp } from "@gurke/sqs";
+import {
+  sqsSteps,
+  sqsCleanUp,
+  waitForInFlightMessagesToBeVisible,
+} from "@gurke/sqs";
 
 const features = loadFeatures(/* Your feature file(s) */);
 
 const steps = ({ when }) => {
   when(/amazing things happen/, async () => {
     // insert execution of your amazing event(s) / action(s)
+
+    // remember to wait for the message to be visible in the last step of your when scenario
+    await waitForInFlightMessagesToBeVisible();
   });
 };
 
-afterAll(async () => {
+afterEach(async () => {
   await sqsCleanUp();
 });
 
@@ -49,3 +54,15 @@ autoBindSteps(features, [sqsSteps, steps]);
 ```
 
 With this setup, the available step definitions can be use in your feature file.
+
+## Default environment variables
+
+The default value of the environment variables for AWS in this library are:
+|Variable Name|Value|
+| -------- | ---- |
+|AWS_REGION|eu-central-1|
+|TEST_SQS_ENDPOINT|http://eu-central-1.queue.localhost.localstack.cloud:4566|
+|TEST_AWS_ACCESS_KEY_ID|test|
+|TEST_AWS_SECRET_ACCESS_KEY|test|
+
+If you need to pass a different value, you can configure it by overwriting it.

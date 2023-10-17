@@ -7,4 +7,9 @@ const sqsCleanUp = async () => {
   await queue.deleteAllQueues();
   testDataStorage.reset();
 };
-export { sqsCleanUp };
+
+const waitForInFlightMessagesToBeVisible = async () => {
+  await queue.waitForInFlightMessagesToBeVisible();
+};
+
+export { sqsCleanUp, waitForInFlightMessagesToBeVisible };
