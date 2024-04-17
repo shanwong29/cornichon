@@ -48,8 +48,8 @@ export const sqsSteps: StepDefinitions = ({ given, then }) => {
       for (const [, value] of Object.entries(message.MessageAttributes)) {
         Object.keys(value).forEach(nestedKey => value[nestedKey] === undefined ? delete value[nestedKey] : {});
       }
-      expect(parsedMessage.MessageAttributes).toEqual(message.MessageAttributes);
-      expect(parsedMessage.MessageBody).toEqual(JSON.parse(message.Body));
+      expect(parsedMessage.MessageAttributes).toStrictEqual(message.MessageAttributes);
+      expect(parsedMessage.MessageBody).toStrictEqual(JSON.parse(message.Body));
     }
   );
 

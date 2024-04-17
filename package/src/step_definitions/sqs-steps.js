@@ -96,8 +96,8 @@ var sqsSteps = function (_a) {
                         _b = _a[_i], value = _b[1];
                         _loop_1(value);
                     }
-                    expect(parsedMessage.MessageAttributes).toEqual(message.MessageAttributes);
-                    expect(parsedMessage.MessageBody).toEqual(JSON.parse(message.Body));
+                    expect(parsedMessage.MessageAttributes).toStrictEqual(message.MessageAttributes);
+                    expect(parsedMessage.MessageBody).toStrictEqual(JSON.parse(message.Body));
                     return [2 /*return*/];
             }
         });
