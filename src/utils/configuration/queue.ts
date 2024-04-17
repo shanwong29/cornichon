@@ -3,6 +3,7 @@ import {
   CreateQueueCommandInput,
   DeleteQueueCommand,
   ListQueuesCommand,
+  Message,
   ReceiveMessageCommand,
   SendMessageBatchCommand,
   SendMessageBatchRequest,
@@ -95,6 +96,26 @@ export const queue = {
     } catch (err) {
       console.log(err);
     }
+  },
+
+  getMessageInQueue: async (queueName): Promise<Message> => {
+    let response = testDataStorage.getPolledQueueMsgs(queueName);
+    if (response === undefined) {
+      const command = new ReceiveMessageCommand({
+        MaxNumberOfMessages: 1,
+        QueueUrl: `${process.env["QUEUE_DOMAIN"]}/${queueName}`,
+        MessageAttributeNames: [".*"],
+      });
+      response = await getSqs().send(command);
+      // after polling, messages will be gone and cannot be re-polled, so the polled message are stored in testDataStorage in case of later use
+      testDataStorage.setPolledQueueMsgs(queueName, response);
+    }
+
+    if (!response?.Messages || response.Messages.length < 1) {
+      return undefined;
+    }
+
+    return response.Messages[0]
   },
 
   getListOfMessageBodyInQueue: async (queueName) => {
