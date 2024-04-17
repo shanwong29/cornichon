@@ -78,6 +78,30 @@ var sqsSteps = function (_a) {
             }
         });
     }); });
+    then(/queue with variable name "(.*)" should have message with the following MessageBody and MessageAttributes:/, function (queueNameVariable, expectedMessage) { return __awaiter(void 0, void 0, void 0, function () {
+        var message, parsedMessage, _loop_1, _i, _a, _b, value;
+        return __generator(this, function (_c) {
+            switch (_c.label) {
+                case 0: return [4 /*yield*/, queue_1.queue.getMessageInQueue(process.env[queueNameVariable])];
+                case 1:
+                    message = _c.sent();
+                    parsedMessage = JSON.parse(expectedMessage);
+                    expect(parsedMessage.MessageAttributes).toBeDefined();
+                    expect(parsedMessage.MessageBody).toBeDefined();
+                    _loop_1 = function (value) {
+                        Object.keys(value).forEach(function (nestedKey) { return value[nestedKey] === undefined ? delete value[nestedKey] : {}; });
+                    };
+                    // Remove all the undefined values within MessageAttributes.
+                    for (_i = 0, _a = Object.entries(message.MessageAttributes); _i < _a.length; _i++) {
+                        _b = _a[_i], value = _b[1];
+                        _loop_1(value);
+                    }
+                    expect(parsedMessage.MessageAttributes).toEqual(message.MessageAttributes);
+                    expect(parsedMessage.MessageBody).toEqual(JSON.parse(message.Body));
+                    return [2 /*return*/];
+            }
+        });
+    }); });
     then(/queue with variable name "(.*)" should have message with following message Body:/, function (queueNameVariable, expectedMessageBody) { return __awaiter(void 0, void 0, void 0, function () {
         var listOfMsgInQueue, listOfParsedMsgBody;
         return __generator(this, function (_a) {
