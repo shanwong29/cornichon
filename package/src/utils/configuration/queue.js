@@ -146,6 +146,32 @@ exports.queue = {
             }
         });
     }); },
+    getMessageInQueue: function (queueName) { return __awaiter(void 0, void 0, void 0, function () {
+        var response, command;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    response = test_data_storage_1.testDataStorage.getPolledQueueMsgs(queueName);
+                    if (!(response === undefined)) return [3 /*break*/, 2];
+                    command = new client_sqs_1.ReceiveMessageCommand({
+                        MaxNumberOfMessages: 1,
+                        QueueUrl: "".concat(process.env["QUEUE_DOMAIN"], "/").concat(queueName),
+                        MessageAttributeNames: [".*"],
+                    });
+                    return [4 /*yield*/, getSqs().send(command)];
+                case 1:
+                    response = _a.sent();
+                    // after polling, messages will be gone and cannot be re-polled, so the polled message are stored in testDataStorage in case of later use
+                    test_data_storage_1.testDataStorage.setPolledQueueMsgs(queueName, response);
+                    _a.label = 2;
+                case 2:
+                    if (!(response === null || response === void 0 ? void 0 : response.Messages) || response.Messages.length < 1) {
+                        return [2 /*return*/, undefined];
+                    }
+                    return [2 /*return*/, response.Messages[0]];
+            }
+        });
+    }); },
     getListOfMessageBodyInQueue: function (queueName) { return __awaiter(void 0, void 0, void 0, function () {
         var response, command;
         return __generator(this, function (_a) {

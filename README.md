@@ -21,6 +21,10 @@ given(
 then(/queue with variable name "(.*)" should have "(.*)" (message|messages)/);
 
 then(
+  /queue with variable name "(.*)" should have message with the following MessageBody and MessageAttributes/
+);
+
+then(
   /queue with variable name "(.*)" should have message with following message Body:/
 );
 ```
@@ -28,12 +32,12 @@ then(
 ## Example usage
 
 ```ts
-import { autoBindSteps, loadFeatures } from "jest-cucumber";
+import { autoBindSteps, loadFeatures } from 'jest-cucumber';
 import {
   sqsSteps,
   sqsCleanUp,
   waitForInFlightMessagesToBeVisible,
-} from "@gurke/sqs";
+} from '@gurke/sqs';
 
 const features = loadFeatures(/* Your feature file(s) */);
 

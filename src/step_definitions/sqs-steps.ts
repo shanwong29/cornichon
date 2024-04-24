@@ -8,9 +8,8 @@ export const sqsSteps: StepDefinitions = ({ given, then }) => {
     async (queueType: "fifo" | "standard", queueVariableName: string) => {
       const isFifo = queueType === "fifo";
       // queueName needs to be unique here to avoid messages storing in the same queue in localstack
-      process.env[queueVariableName] = `${testDataStorage.getTestCaseId()}-${
-        process.env[queueVariableName]
-      }`;
+      process.env[queueVariableName] = `${testDataStorage.getTestCaseId()}-${process.env[queueVariableName]
+        }`;
       await queue.createQueue(process.env[queueVariableName] as string, isFifo);
     }
   );
@@ -32,6 +31,25 @@ export const sqsSteps: StepDefinitions = ({ given, then }) => {
         process.env[queueNameVariable]
       );
       expect(listOfMsgInQueue.length).toBe(Number(numberOfMsg));
+    }
+  );
+
+  then(
+    /queue with variable name "(.*)" should have message with the following MessageBody\(JSON parsed\) and MessageAttributes:/,
+    async (queueNameVariable: string, expectedMessage: string) => {
+      const message = await queue.getMessageInQueue(
+        process.env[queueNameVariable]
+      );
+
+      const parsedMessage = JSON.parse(expectedMessage);
+      expect(parsedMessage.MessageAttributes).toBeDefined();
+      expect(parsedMessage.MessageBody).toBeDefined();
+      // Remove all the undefined values within MessageAttributes.
+      for (const [, value] of Object.entries(message.MessageAttributes)) {
+        Object.keys(value).forEach(nestedKey => value[nestedKey] === undefined ? delete value[nestedKey] : {});
+      }
+      expect(parsedMessage.MessageAttributes).toStrictEqual(message.MessageAttributes);
+      expect(parsedMessage.MessageBody).toStrictEqual(JSON.parse(message.Body));
     }
   );
 
