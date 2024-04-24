@@ -35,7 +35,7 @@ export const sqsSteps: StepDefinitions = ({ given, then }) => {
   );
 
   then(
-    /queue with variable name "(.*)" should have message with the following MessageBody and MessageAttributes:/,
+    /queue with variable name "(.*)" should have message with the following MessageBody\(JSON parsed\) and MessageAttributes:/,
     async (queueNameVariable: string, expectedMessage: string) => {
       const message = await queue.getMessageInQueue(
         process.env[queueNameVariable]

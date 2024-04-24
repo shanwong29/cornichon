@@ -78,7 +78,7 @@ var sqsSteps = function (_a) {
             }
         });
     }); });
-    then(/queue with variable name "(.*)" should have message with the following MessageBody and MessageAttributes:/, function (queueNameVariable, expectedMessage) { return __awaiter(void 0, void 0, void 0, function () {
+    then(/queue with variable name "(.*)" should have message with the following MessageBody\(JSON parsed\) and MessageAttributes:/, function (queueNameVariable, expectedMessage) { return __awaiter(void 0, void 0, void 0, function () {
         var message, parsedMessage, _loop_1, _i, _a, _b, value;
         return __generator(this, function (_c) {
             switch (_c.label) {
